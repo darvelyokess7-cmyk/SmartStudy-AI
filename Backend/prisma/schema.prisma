@@ -1,0 +1,104 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url  = env("DATABASE_URL")
+}
+
+
+model User {
+  id   Int  @id @default(autoincrement())
+  fullName String
+  email String  @unique
+  password String 
+  createdAt  DateTime  @default(now())
+
+  documents Document[]
+  notes  Note[]
+  quizzes  Quiz[]
+  progresses Progress[]
+  summaries Summary[]
+}
+
+model Document {
+  id    Int          @id @default(autoincrement())
+  fileName String
+  filePath String
+  createdAt DateTime @default(now())
+
+  userId Int 
+  user   User  @relation(fields: [userId], references:[id])
+
+  notes Note[]
+  quizzes  Quiz[]
+  progresses Progress[]
+  summary Summary[]
+}
+  model Note {
+    id Int          @id @default(autoincrement())
+    title String
+    content String
+    createdAt DateTime @default(now())
+  
+
+  userId Int 
+  user   User  @relation(fields: [userId], references:[id])
+
+  documentId Int
+  document Document @relation(fields:[documentId], references: [id])
+}
+
+model Quiz {
+  id         Int      @id @default(autoincrement())
+
+  question   String
+  optionA    String
+  optionB    String
+  optionC    String
+  optionD    String
+
+  answer     String
+
+  createdAt  DateTime @default(now())
+
+  userId     Int
+  user       User @relation(fields: [userId], references: [id])
+
+  documentId Int
+  document   Document @relation(fields: [documentId], references: [id])
+}
+
+model Progress {
+  id         Int      @id @default(autoincrement())
+  percentage Int
+  completed  Boolean  @default(false)
+  updatedAt  DateTime @updatedAt
+
+  userId     Int
+  user        User @relation(fields: [userId], references: [id])
+
+  documentId Int
+  document    Document @relation(fields: [documentId], references: [id])
+  @@unique([userId, documentId])
+}
+
+model Summary {
+  id         Int      @id @default(autoincrement())
+
+  content    String   @db.Text
+
+  createdAt  DateTime @default(now())
+
+  userId     Int
+  user       User @relation(fields: [userId], references: [id])
+
+  documentId Int      @unique
+  document   Document @relation(fields: [documentId], references: [id])
+}
