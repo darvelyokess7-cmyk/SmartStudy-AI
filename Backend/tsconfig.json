@@ -2,11 +2,12 @@
   "compilerOptions": {
     "target": "ES2020",
     "module": "CommonJS",
+    "rootDir": "./src",
     "outDir": "./dist",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
   },
-  "include": ["src", "prisma.config.ts"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }
