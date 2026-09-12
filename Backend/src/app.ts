@@ -12,7 +12,13 @@ import aiRoutes from "./routes/aiRoutes";
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://smart-study-ai-cyan.vercel.app"
+  ],
+  credentials: true,
+}));
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 app.use(morgan("dev"));
