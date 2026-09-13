@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://smartstudy-backend-dpqd.onrender.com/api",
+  baseURL: "https://smartstudy-backend-dpqd.onrender.com/api",
   headers: {
     "Content-Type": "application/json",
   },
