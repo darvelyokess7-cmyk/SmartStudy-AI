@@ -37,7 +37,7 @@ export const generateFlashcards = async (id: number) => {
 
 export const generateQuiz = async (id: number) => {
   const token = localStorage.getItem("token");
-  const response = await fetch(`http://localhost:5000/api/documents/${id}/quiz`, {
+  const response = await fetch(`http://smartstudy-backend-dpqd.onrender.com/api/documents/${id}/quiz`, {
     method: "POST",
     headers: {
       "Authorization": `Bearer ${token}`,
